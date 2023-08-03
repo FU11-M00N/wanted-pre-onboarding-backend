@@ -1,0 +1,22 @@
+{
+   "name": "wanted-pre-onboarding-backend",
+   "version": "0.0.1",
+   "description": "원티드 프리온보딩 백엔드 인턴십",
+   "main": "app.js",
+   "scripts": {
+      "start": "nodemon app"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/FU11-M00N/wanted-pre-onboarding-backend.git"
+   },
+   "author": "",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/FU11-M00N/wanted-pre-onboarding-backend/issues"
+   },
+   "homepage": "https://github.com/FU11-M00N/wanted-pre-onboarding-backend#readme",
+   "dependencies": {
+      "express": "^4.18.2"
+   }
+}
