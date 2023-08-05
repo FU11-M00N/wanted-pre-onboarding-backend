@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const express = require('express');
 const morgan = require('morgan');
-const jwt = require('jsonwebtoken');
 
 const { sequelize } = require('./models/index');
 
@@ -21,17 +20,6 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
-// token = jwt.sign(
-//    {
-//       type: 'jwt',
-//       nickname: nickname,
-//    },
-//    SECRET_KEY,
-//    {
-//       expiresIn: '15m',
-//       issuer: 'yhw',
-//    },
-// );
 
 app.set('port', process.env.PORT || 3001);
 
