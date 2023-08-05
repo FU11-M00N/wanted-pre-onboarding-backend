@@ -1,9 +1,12 @@
-const express = require('express');
+require('dotenv').config();
 
+const express = require('express');
 const morgan = require('morgan');
-const app = express();
+const jwt = require('jsonwebtoken');
 
 const { sequelize } = require('./models/index');
+
+const authRouter = require('./routes/auth');
 
 sequelize
    .sync({ force: false })
@@ -14,11 +17,25 @@ sequelize
       console.error(err);
    });
 
-app.use(morgan('dev'));
+const app = express();
 
-require('dotenv').config();
+app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: true }));
+// token = jwt.sign(
+//    {
+//       type: 'jwt',
+//       nickname: nickname,
+//    },
+//    SECRET_KEY,
+//    {
+//       expiresIn: '15m',
+//       issuer: 'yhw',
+//    },
+// );
 
 app.set('port', process.env.PORT || 3001);
+
+app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
    res.send('test');
