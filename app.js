@@ -6,9 +6,10 @@ const morgan = require('morgan');
 const { sequelize } = require('./models/index');
 
 const authRouter = require('./routes/auth');
+const postRouter = require('./routes/post');
 
 sequelize
-   .sync({ force: false })
+   .sync({ force: true })
    .then(() => {
       console.log('DB 연결');
    })
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 3001);
 
 app.use('/api/auth', authRouter);
+app.use('/api/post', postRouter);
 
 app.get('/', (req, res) => {
    res.send('test');

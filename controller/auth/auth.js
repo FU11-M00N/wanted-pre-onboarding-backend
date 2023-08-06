@@ -8,10 +8,6 @@ const User = require('../../models/user');
 
 const { emailCheck, passwordCheck } = require('./validation');
 
-exports.test = async (req, res, next) => {
-   console.log('test');
-};
-
 exports.login = async (req, res, next) => {
    try {
       const jwtKey = process.env.JWT_SECRET_KEY;
@@ -33,6 +29,7 @@ exports.login = async (req, res, next) => {
                   {
                      type: 'JWT',
                      email,
+                     userId: user.id,
                   },
                   jwtKey,
                   {
