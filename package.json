@@ -17,6 +17,13 @@
    },
    "homepage": "https://github.com/FU11-M00N/wanted-pre-onboarding-backend#readme",
    "dependencies": {
-      "express": "^4.18.2"
+      "bcrypt": "^5.1.0",
+      "dotenv": "^16.3.1",
+      "express": "^4.18.2",
+      "jsonwebtoken": "^9.0.1",
+      "morgan": "^1.10.0",
+      "mysql2": "^3.6.0",
+      "sequelize": "^6.32.1",
+      "sequelize-cli": "^6.6.1"
    }
 }
