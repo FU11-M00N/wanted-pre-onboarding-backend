@@ -53,6 +53,7 @@ exports.login = async (req, res, next) => {
       }
    } catch (error) {
       console.error(error);
+      res.status(500).send('Internal Server Error');
    }
 };
 
@@ -83,6 +84,6 @@ exports.join = async (req, res, next) => {
       }
    } catch (error) {
       console.error(error);
-      next();
+      res.status(500).send('Internal Server Error');
    }
 };

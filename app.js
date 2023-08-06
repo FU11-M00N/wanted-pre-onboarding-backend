@@ -9,7 +9,7 @@ const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 
 sequelize
-   .sync({ force: true })
+   .sync({ force: false })
    .then(() => {
       console.log('DB 연결');
    })
@@ -29,6 +29,12 @@ app.use('/api/post', postRouter);
 
 app.get('/', (req, res) => {
    res.send('test');
+});
+
+app.use((req, res, next) => {
+   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+   error.status = 404;
+   next(error);
 });
 
 app.listen(app.get('port'), () => {
