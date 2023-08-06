@@ -1,15 +1,27 @@
 const Post = require('../../models/post');
 const User = require('../../models/user');
+const { titleCheck, contentCheck } = require('./validation');
 
-exports.uploadPost = async (req, res, next) => {
+exports.createPost = async (req, res, next) => {
    try {
       const { title, content } = req.body;
-      await Post.create({
-         title,
-         content,
-         UserId: req.decoded.userId,
-      });
-      res.status(200).send('포스트 생성 완료');
+      const errors = {};
+
+      // 게시글 제목 길이 체크
+      titleCheck(title, errors);
+      // 게시글 본문 길이 체크
+      contentCheck(content, errors);
+
+      if (Object.keys(errors).length) {
+         res.status(400).send(errors);
+      } else {
+         const post = await Post.create({
+            title,
+            content,
+            UserId: req.decoded.userId,
+         });
+         res.status(201).send(post);
+      }
    } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
@@ -18,9 +30,59 @@ exports.uploadPost = async (req, res, next) => {
 
 exports.updatePost = async (req, res, next) => {
    try {
+      const { title, content } = req.body;
+      const errors = {};
+
       const post = await Post.findOne({
-         where: { id: req.params.id },
+         where: { id: req.params.postId },
       });
+
+      // 게시글 제목 길이 체크
+      titleCheck(title, errors);
+      // 게시글 본문 길이 체크
+      contentCheck(content, errors);
+
+      if (Object.keys(errors).length) {
+         res.status(400).send(errors);
+      } else {
+         if (post && post.UserId === req.decoded.userId) {
+            await Post.update(
+               {
+                  title: title,
+                  content: content,
+               },
+               {
+                  where: { id: req.params.postId },
+               },
+            );
+            res.status(200).send('게시글 수정 완료.');
+         } else {
+            res.status(403).send('올바른 요청 방식이 아닙니다.');
+         }
+      }
+   } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+   }
+};
+
+exports.deletePost = async (req, res, next) => {
+   try {
+      const post = await Post.findOne({
+         where: { id: req.params.postId },
+      });
+
+      if (post && post.UserId === req.decoded.userId) {
+         // soft delete
+         await Post.destroy({
+            where: {
+               id: req.params.postId,
+            },
+         });
+         res.status(200).send('게시글 삭제 완료');
+      } else {
+         res.status(403).send('올바른 요청 방식이 아닙니다.');
+      }
    } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
@@ -31,22 +93,28 @@ exports.getPosts = async (req, res, next) => {
    try {
       const { page } = req.query;
       let { limit } = req.query;
+
+      const numPage = Number(page);
+      const numLimit = Number(limit);
+
       let offset;
 
-      if (!Number(limit) || limit == undefined) {
-         // limit이 문자열 이거나, undefined 일 경우 default value 할당
-         limit = 10;
-      }
-
-      if (!Number(page) || page === undefined) {
+      if (!numPage || page === undefined) {
          // page가 문자열 이거나, undefiend 일 경우 default value 할당
          offset = 0;
       } else {
-         offset = limit * (Number(page) - 1);
+         offset = limit * (numPage - 1);
       }
 
       const posts = await Post.findAndCountAll({
-         limit: Number(limit) ? Number(limit) : 10,
+         include: [
+            {
+               model: User,
+               require: true,
+               attributes: ['id', 'email'],
+            },
+         ],
+         limit: numLimit ? numLimit : 10,
          offset,
          order: [['createdAt', 'ASC']],
          attributes: ['id', 'title', 'content', 'createdAt'],
@@ -74,7 +142,7 @@ exports.getPost = async (req, res, next) => {
             },
          ],
          attributes: ['id', 'title', 'content', 'createdAt'],
-         where: { id: req.params.id },
+         where: { id: req.params.postId },
       });
       if (post) {
          res.status(200).send(post);

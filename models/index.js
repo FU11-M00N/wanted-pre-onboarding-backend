@@ -15,11 +15,12 @@ fs.readdirSync(__dirname) // 현재 폴더의 모든 파일을 조회
       return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js';
    })
    .forEach(file => {
-      // init
+      // models 폴더 내 모델 파일 불러오기
       const model = require(path.join(__dirname, file));
 
       console.log(file, model.name);
       db[model.name] = model;
+      // 모델 초기화
       model.initiate(sequelize);
    });
 

@@ -27,10 +27,6 @@ app.set('port', process.env.PORT || 3001);
 app.use('/api/auth', authRouter);
 app.use('/api/post', postRouter);
 
-app.get('/', (req, res) => {
-   res.send('test');
-});
-
 app.use((req, res, next) => {
    const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
    error.status = 404;
