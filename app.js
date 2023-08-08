@@ -9,12 +9,14 @@ const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 
 sequelize
-   .sync({ force: false })
+   .sync({ force: true })
    .then(() => {
       console.log('DB 연결');
    })
    .catch(err => {
       console.error(err);
+      console.log('db 연결 실패 서버를 pm2로 재시작 합니다.');
+      process.exit(1);
    });
 
 const app = express();

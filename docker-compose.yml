@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+   db:
+      image: mysql:latest
+      container_name: db
+      volumes:
+         - ./db_data:/var/lib/mysql
+      env_file:
+         - .db.env
+      restart: always
+      networks:
+         - wanted_net
+
+   web:
+      build:
+         dockerfile: Dockerfile
+      container_name: express
+      volumes:
+         - ./app_data:/var/www/html
+      ports:
+         - '3001:3001'
+      depends_on:
+         - db
+      restart: on-failure
+      networks:
+         - wanted_net
+      links:
+         - db
+
+networks:
+   wanted_net:
+      driver: bridge
