@@ -1,2 +1,15 @@
+# node 설정
 node_modules/
-config/
+
+# vscode, 원격 설정 파일
+.ssh/
+.vscode/
+.profile
+
+# jwt, db 설정 파일
+.env
+
+# docker 설정 파일
+.db.env
+app_data/
+db_data/
