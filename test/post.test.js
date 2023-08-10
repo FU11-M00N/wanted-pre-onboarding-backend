@@ -28,6 +28,7 @@ describe('post api', () => {
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.send).toHaveBeenCalledWith(post);
    });
+
    it('게시글 수정', async () => {
       const req = {
          body: { title: '게시글 제목입니다 수정', content: '게시글 본문입니다. 수정' },
@@ -57,6 +58,7 @@ describe('post api', () => {
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.send).toHaveBeenCalledWith('게시글 수정 완료.');
    });
+
    it('다른 유저가 게시글을 수정하려고 할 경우', async () => {
       const req = {
          body: { title: '게시글 제목입니다 수정', content: '게시글 본문입니다. 수정' },

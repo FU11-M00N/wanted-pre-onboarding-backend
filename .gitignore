@@ -7,9 +7,9 @@ node_modules/
 .profile
 
 # jwt, db 설정 파일
-.env
+#.env
 
 # docker 설정 파일
-.db.env
+#.db.env
 app_data/
 db_data/
