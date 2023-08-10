@@ -6,7 +6,8 @@
    "scripts": {
       "local": "NODE_ENV=local MYSQL_HOST=127.0.0.1 nodemon app",
       "dev": "NODE_ENV=development nodemon app",
-      "prod": "NODE_ENV=production pm2 start app.js"
+      "prod": "NODE_ENV=production pm2 start app.js",
+      "test": "jest"
    },
    "repository": {
       "type": "git",
@@ -30,5 +31,8 @@
       "pm2": "^5.3.0",
       "sequelize": "^6.32.1",
       "sequelize-cli": "^6.6.1"
+   },
+   "devDependencies": {
+      "jest": "^29.6.2"
    }
 }
