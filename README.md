@@ -54,7 +54,7 @@
 POST `/api/auth/join`
 
 ```bash
-curl --location '13.209.197.240:3001/api/auth/join' \
+curl --location 'localhost:3001/api/auth/join' \
 --data-urlencode 'email=test5@test.com' \
 --data-urlencode 'password=12345678' \
 --data-urlencode '='
@@ -65,7 +65,7 @@ curl --location '13.209.197.240:3001/api/auth/join' \
 POST `/api/auth/login`
 
 ```bash
-curl --location '13.209.197.240:3001/api/auth/login' \
+curl --location 'localhost:3001/api/auth/login' \
 --data-urlencode 'email=test1@test.com' \
 --data-urlencode 'password=12345678'
 ```
@@ -75,7 +75,7 @@ curl --location '13.209.197.240:3001/api/auth/login' \
 POST `/api/post/`
 
 ```bash
-curl --location '13.209.197.240:3001/api/post/' \
+curl --location 'localhost:3001/api/post/' \
 --header 'authorization: {jwt token}' \
 --data-urlencode 'title=test' \
 --data-urlencode 'content=test'
@@ -86,7 +86,7 @@ curl --location '13.209.197.240:3001/api/post/' \
 PATCH `/api/post/:id`
 
 ```bash
-curl --location --request PATCH '13.209.197.240:3001/api/post/1' \
+curl --location --request PATCH 'localhost:3001/api/post/1' \
 --header 'authorization: {jwt token}' \
 --data-urlencode 'title=게시글 수정 테스트 테스트 테스트' \
 --data-urlencode 'content=게시글 수정 테스트'
@@ -97,7 +97,7 @@ curl --location --request PATCH '13.209.197.240:3001/api/post/1' \
 DELETE `/api/post/:id`
 
 ```bash
-curl --location --request DELETE '13.209.197.240:3001/api/post/1' \
+curl --location --request DELETE 'localhost:3001/api/post/1' \
 --header 'authorization: {jwt token}'
 ```
 
@@ -109,7 +109,7 @@ limit = 페이지에 담길 게시글 개수
 GET `/api/post/?page=1&limit=10`
 
 ```bash
-curl --location '13.209.197.240:3001/api/post/?page=1&limit=10'
+curl --location 'localhost:3001/api/post/?page=1&limit=10'
 ```
 
 ### 특정 게시글 조회 api
@@ -117,7 +117,7 @@ curl --location '13.209.197.240:3001/api/post/?page=1&limit=10'
 GET `/api/post/:id`
 
 ```bash
-curl --location '13.209.197.240:3001/api/post/1'
+curl --location 'localhost:3001/api/post/1'
 ```
 
 ## 데이터베이스 테이블 구조
